@@ -1,14 +1,4 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
 import numpy as np
-
-# df = pd.read_csv('../data/banknotes.txt')
-df = pd.read_csv('../data/mushrooms.csv')
-X = df.to_numpy()[:, :-1]
-y = df.to_numpy()[:, -1]
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
 
 
 class CART:
@@ -30,7 +20,7 @@ class CART:
             preds.append(self.__predict_sample(self.root, sample))
         return np.array(preds)
 
-    def __predict_sample(self,node, sample):
+    def __predict_sample(self, node, sample):
         left = False
         if isinstance(sample[node['idx']], float):
             if sample[node['idx']] <= node['val']:
@@ -126,12 +116,3 @@ class CART:
         return v[np.argmax(c)]
 
 
-c = CART(max_depth=10, min_size=5, subsample_size=10)
-a = c.fit(X_train, y_train)
-y_pred = c.predict(X_test)
-print(classification_report(y_test, y_pred))
-print('a')
-# Check End criteria
-
-# All rows are in the same class
-# Si se cumple categoria go left else go right
