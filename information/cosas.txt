@@ -1,0 +1,18 @@
+Differences
+Random Forest (Breiman)
+Subsample of training set for each Tree (Bootrstrap)
+    F = number of variables selected at each node
+    M = All variables
+Decision tre builder with randomized features at each node (ID3, C4.5 or CART)
+Majority Voting
+
+Decision Forest (Ho)
+Each tree uses a random subsample of features
+
+Tree algorithms
+
+menys 500 , 500-200, mes 2000
+
+hearth disease 300 https://www.kaggle.com/ronitf/heart-disease-uci
+semeion handwritten digit 1600 http://archive.ics.uci.edu/ml/datasets/Semeion+Handwritten+Digit
+satimage (satlog) 6400 http://archive.ics.uci.edu/ml/datasets/Statlog+%28Landsat+Satellite%29

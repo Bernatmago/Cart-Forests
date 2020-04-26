@@ -1,31 +1,33 @@
 from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split
-import pandas as pd
+
 from cart import CART
 from forest import RandomForest, DecisionForest
-
-# df = pd.read_csv('../data/banknotes.txt')
-
-df = pd.read_csv('../data/mushrooms.csv')
-X = df.to_numpy()[:, :-1]
-y = df.to_numpy()[:, -1]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
-n_trees = 10
-s_bootstrap = 100
-n_features = 10
-f = RandomForest(n_trees, s_bootstrap, n_features, max_depth=10, min_size=6)
-f.fit(X_train, y_train)
-f = DecisionForest(n_trees, n_features)
-f.fit(X_train, y_train)
+from data_loader import load_data
 
 
+X_train, X_test, y_train, y_test, numerical_idx = load_data('heart.csv')
 
-# c = CART(max_depth=10, min_size=5, subsample_size=10)
-# a = c.fit(X_train, y_train)
-# y_pred = c.predict(X_test)
-# print(classification_report(y_test, y_pred))
-# print('a')
+
+n_trees = 100
+s_bootstrap = int(X_train.shape[0]/1.25)
+n_features = int(X_train.shape[1]/1.25)
+
 # Check End criteria
 
-# All rows are in the same class
-# Si se cumple categoria go left else go right
+# f = RandomForest(n_trees, s_bootstrap, n_features, max_depth=5, min_size=20)
+# f.fit(X_train, y_train, numerical_idx)
+# y_pred = f.predict(X_test)
+# print(classification_report(y_test, y_pred))
+
+f = DecisionForest(n_trees, n_features, max_depth=5, min_size=1)
+f.fit(X_train, y_train, numerical_idx)
+y_pred = f.predict(X_test)
+print(classification_report(y_test, y_pred))
+
+# c = CART(max_depth=5, min_size=20, subsample_size=n_features)
+# c.fit(X_train, y_train, numerical_idx)
+# y_pred = c.predict(X_test)
+# print(classification_report(y_test, y_pred))
+# print(c)
+
+

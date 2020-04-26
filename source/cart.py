@@ -7,12 +7,16 @@ class CART:
         self.min_size = min_size
         self.subsample_size = subsample_size
         self.root = {}
+        self.numerical_idx = []
 
-    def fit(self, X, y):
+    def __str__(self):
+        self.__print_tree(self.root)
+
+    def fit(self, X, y, numerical_idx=[]):
         X = np.hstack((X, y.reshape(-1, 1)))
+        self.numerical_idx = numerical_idx
         self.root = self.__get_split(X)
         self.__split(self.root, 1)
-        return self.root
 
     def predict(self, X):
         preds = []
@@ -20,9 +24,22 @@ class CART:
             preds.append(self.__predict_sample(self.root, sample))
         return np.array(preds)
 
+    def __print_tree(self, node, depth=0):
+        if isinstance(node, dict):
+            if isinstance(node['val'], float):
+                print('depth {} [{} <= {}]'.format(depth, node['idx'], node['val']))
+            else:
+                print('depth {} [{} =? {}]'.format(depth, node['idx'], node['val']))
+                self.__print_tree(node['left'], depth=depth + 1)
+                self.__print_tree(node['right'], depth=depth + 1)
+        else:
+            print('depth {} [{}]'.format(depth, node))
+
+        pass
+
     def __predict_sample(self, node, sample):
         left = False
-        if isinstance(sample[node['idx']], float):
+        if node['idx'] in self.numerical_idx:
             if sample[node['idx']] <= node['val']:
                 left = True
         else:
@@ -56,7 +73,7 @@ class CART:
         return gini
 
     def __test_split(self, X, idx, value):
-        if isinstance(value, float):
+        if idx in self.numerical_idx:
             left_idx = np.where(X[:, idx] <= value)[0]
         else:
             left_idx = np.where(X[:, idx] == value)[0]
@@ -97,7 +114,7 @@ class CART:
 
         for idx in f_idx:
             # When categorical no need to go row by row
-            if isinstance(X[-1, idx], float):
+            if idx in self.numerical_idx:
                 for row in X:
                     groups = self.__test_split(X, idx, row[idx])
                     gini = self.__gini_index(groups, classes)
