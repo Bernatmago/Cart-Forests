@@ -12,7 +12,8 @@ Datasets used for experimentation:
 
 To run the defined experiments just execute main.py
 
-Decision Forest Example:
+
+### Decision Forest Example:
 ```
 from forest import DecisionForest
 forest = RandomForest(n_trees, n_features, max_depth=-1, min_size=1)
@@ -22,7 +23,7 @@ y_pred = forest.predict(X_test)
 ```
 
 
-Random Forest Example:
+### Random Forest Example:
 ```
 from forest import RandomForest
 forest = RandomForest(n_trees, size_bootstrap, n_features, max_depth=-1, min_size=1)
@@ -31,7 +32,7 @@ y_pred = forest.predict(X_test)
 
 ```
 
-CART Tree Example:
+### CART Tree Example:
 ```
 from cart import CART
 tree = CART(max_depth=-1, min_size=1, subsample_size=-1)
