@@ -14,7 +14,7 @@ To run the defined experiments just execute main.py
 
 
 ### Decision Forest Example:
-```
+```python
 from forest import DecisionForest
 forest = RandomForest(n_trees, n_features, max_depth=-1, min_size=1)
 forest.fit(X_train, y_train, numerical_attr_idx)
@@ -24,7 +24,7 @@ y_pred = forest.predict(X_test)
 
 
 ### Random Forest Example:
-```
+```python
 from forest import RandomForest
 forest = RandomForest(n_trees, size_bootstrap, n_features, max_depth=-1, min_size=1)
 forest.fit(X_train, y_train, numerical_attr_idx)
@@ -33,7 +33,7 @@ y_pred = forest.predict(X_test)
 ```
 
 ### CART Tree Example:
-```
+```python
 from cart import CART
 tree = CART(max_depth=-1, min_size=1, subsample_size=-1)
 tree.fit(X_train, y_train, numerical_attr_idx)
