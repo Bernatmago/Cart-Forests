@@ -1,9 +1,11 @@
-from sklearn.metrics import classification_report, accuracy_score, f1_score
-
-from forest import RandomForest, DecisionForest
-from data_loader import load_data, plot_grid_search
 import operator
 import pprint
+
+from sklearn.metrics import classification_report, accuracy_score, f1_score
+
+from source.forest import RandomForest, DecisionForest
+from source.data_loader import load_data, plot_grid_search
+
 datasets = ['heart', 'semeion', 'mushrooms']
 for dataset in datasets:
     X_train, X_test, y_train, y_test, numerical_idx, names = load_data(dataset + '.csv')
